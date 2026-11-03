@@ -11,8 +11,8 @@ function FindProxyForURL(url, host) {
     }
 
     var resolvedIP = dnsResolve(host);
-    // Direct for new local LAN (172.31.10.0/26) and KSWAN switch subnet (10.122.171.16/28)
-    if (isInNet(resolvedIP, "172.31.10.0", "255.255.255.192") ||
+    // Direct for new local LAN (172.31.10.0/24) and KSWAN switch subnet (10.122.171.16/28)
+    if (isInNet(resolvedIP, "172.31.10.0", "255.255.255.0") ||
         isInNet(resolvedIP, "10.122.171.16", "255.255.255.240")) {
         return "DIRECT";
     }
@@ -33,7 +33,7 @@ function FindProxyForURL(url, host) {
 
     // Direct access to internal 10.x.x.x addresses if reached via IP
     if (isInNet(resolvedIP, "10.0.0.0", "255.0.0.0") &&
-        !isInNet(resolvedIP, "10.122.171.16", "255.255.255.240")) {
+        !isInNet(resolvedIP, "10.122.171.16", "255.255.255.0")) {
         return "PROXY 10.1.6.20:3128; DIRECT";
     }
 
